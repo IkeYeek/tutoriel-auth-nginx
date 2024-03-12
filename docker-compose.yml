@@ -4,10 +4,17 @@ services:
     image: nginx:1.25-alpine3.18 
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/auth.conf:/etc/nginx/sites-enabled/auth.conf
       - ./nginx/startpage.conf:/etc/nginx/sites-enabled/startpage.conf
     ports:
       - "8080:80"
     restart: always
+
+  backend:
+    image: backend
+    build:
+      context: ./backend/
+      dockerfile: ./Dockerfile
 
   startpage:
       image: daledavies/jump
@@ -22,3 +29,5 @@ services:
           SITENAME: 'La startpage du test'
           NOINDEX: 'true'
           METRICTEMP: 'true'
+
+
