@@ -12,3 +12,8 @@ path = "src/main.rs"
 [dependencies]
 actix-web = "4"
 derive_more = "0.99.17"
+cookie = "0.18.0-rc.0"
+serde = { version = "1.0.197", features = ["derive"] }
+bcrypt = "0.15.0"
+jsonwebtoken = "9"
+chrono = "0.4.35"

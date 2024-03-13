@@ -1,22 +1,10 @@
-FROM rust:latest
-
-WORKDIR /
-
-# Install any necessary dependencies here
-RUN apt-get update && \
-    apt-get install -y build-essential
-
-# Copy only the Cargo.toml and Cargo.lock files to cache dependencies
-COPY ./Cargo.toml ./Cargo.lock ./
-
-# Build and cache dependencies
-RUN cargo fetch
-
-# Copy the rest of your source code
+FROM rust:1.76-alpine as builder
+WORKDIR /usr/src/backend
 COPY . .
+RUN apk add musl-dev
+RUN cargo install --path .
 
-# Expose the port your Actix Rust app listens on
+FROM debian:bullseye-slim
+COPY --from=builder /usr/local/cargo/bin/backend /usr/local/bin/backend
 EXPOSE 8080
-
-# Start the app using cargo run
-CMD ["cargo", "run"]
+CMD ["backend"]

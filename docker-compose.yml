@@ -18,8 +18,6 @@ services:
 
   startpage:
       image: daledavies/jump
-      ports:
-        - 8123:8080
       volumes:
         - ./startpage/backgrounds:/backgrounds
         - ./startpage/favicon:/favicon
